@@ -11,11 +11,31 @@ Environment Variables:
   PORT             (optional, default 5000)
 """
 
+import logging
 import os
+from pathlib import Path
+
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 
 from extractor import extract_from_file
+
+# ─── Load .env file if present (before anything uses os.environ) ──────────────
+_env_path = Path(__file__).parent / ".env"
+if _env_path.exists():
+    for _line in _env_path.read_text(encoding="utf-8").splitlines():
+        _line = _line.strip()
+        if _line and not _line.startswith("#") and "=" in _line:
+            _k, _, _v = _line.partition("=")
+            os.environ.setdefault(_k.strip(), _v.strip().strip('"').strip("'"))
+
+# ─── Logging ──────────────────────────────────────────────────────────────────
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s  %(levelname)-8s  %(name)s: %(message)s",
+    datefmt="%H:%M:%S",
+)
+log = logging.getLogger(__name__)
 
 app = Flask(__name__, static_folder="static", static_url_path="")
 CORS(app)
@@ -399,23 +419,39 @@ def calculate():
     sem_data = CURRICULUM.get(scheme, {}).get(sem_key, {}).get(branch)
     valid_codes = list(sem_data["subjects"].keys()) if sem_data else []
 
+    log.info("Processing %s | scheme=%s sem=%s branch=%s | valid_codes=%d",
+             file.filename, scheme, sem_key, branch, len(valid_codes))
+
     try:
         raw_subjects = extract_from_file(file_bytes, file.filename, valid_codes)
     except EnvironmentError as e:
+        log.error("API key error: %s", e)
         return jsonify({"error": str(e)}), 503
     except ValueError as e:
+        log.error("Parse error: %s", e)
         return jsonify({"error": f"Could not read marksheet: {e}"}), 422
+    except RuntimeError as e:
+        log.error("Gemini model error: %s", e)
+        return jsonify({"error": str(e)}), 503
     except Exception as e:
-        app.logger.exception("Extraction failed")
+        log.exception("Extraction failed unexpectedly")
         return jsonify({"error": f"Failed to process marksheet: {e}"}), 500
 
+    log.info("Extracted %d raw subjects: %s",
+             len(raw_subjects), [s["code"] for s in raw_subjects])
+
     if not raw_subjects:
-        return jsonify({"error": "No subjects found. Upload a clear VTU marksheet."}), 422
+        return jsonify({
+            "error": "No subjects found in the marksheet. "
+                     "Make sure you selected the correct semester and uploaded a clear VTU marksheet."
+        }), 422
 
     result, err = _build_result(raw_subjects, file.filename, scheme, sem_key, branch)
     if err:
         return jsonify({"error": err}), 400
 
+    log.info("SGPA=%s | matched=%d unmatched=%d",
+             result["sgpa"], len(result["subjects"]), len(result["unmatched_subjects"]))
     return jsonify(result), 200
 
 
@@ -424,5 +460,5 @@ def calculate():
 if __name__ == "__main__":
     port  = int(os.environ.get("PORT", 5000))
     debug = os.environ.get("FLASK_DEBUG", "0") == "1"
-    print(f"\n  SGP Calculator running → http://localhost:{port}\n")
+    print(f"\n  SGP Calculator running at http://localhost:{port}\n")
     app.run(host="0.0.0.0", port=port, debug=debug)

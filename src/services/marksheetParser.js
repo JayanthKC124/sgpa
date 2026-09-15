@@ -30,19 +30,12 @@ export async function parseMarksheet(file, onProgress, semester = "4", branch = 
 
   const data = await response.json().catch(() => ({}));
 
-  if (!response.ok && isOcrFallbackError(data.error)) {
-    onProgress?.("Running local OCR in your browser…");
-    const ocrText = await runBrowserOcr(file);
-    formData.append("ocr_text", ocrText);
-    response = await fetch("/api/calculate", { method: "POST", body: formData });
-  }
-
-  const finalData = await response.json().catch(() => ({}));
   if (!response.ok) {
-    throw new Error(finalData.error || data.error || `Server error (${response.status})`);
+    // Throw immediately with the exact backend error message
+    throw new Error(data.error || `Server error (${response.status})`);
   }
 
-  return finalData;
+  return data;
 }
 
 function isOcrFallbackError(message = "") {

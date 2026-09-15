@@ -14,11 +14,13 @@ export async function processMarksheet(file, onProgress, semester = "4", branch 
   onProgress?.("Calculating grades and SGPA…");
 
   if (!data.subjects || data.subjects.length === 0) {
+    // Surface whatever message the backend already sent (it's more specific)
     return {
       status: "error",
       errorMessage:
+        data.error ||
         "No recognized subjects found in the marksheet. " +
-        "Please upload a clear VTU 2022 Scheme marksheet.",
+        "Please ensure you selected the correct semester and uploaded a clear VTU marksheet.",
       filename: file.name,
       unmatched: data.unmatched_subjects || [],
     };
