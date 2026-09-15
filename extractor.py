@@ -4,8 +4,8 @@ Marksheet OCR Extractor
 Sends the uploaded marksheet (PDF or image) to Google Gemini Vision API.
 
 Strategy:
-  - PDF   → sent directly as application/pdf (Gemini reads it natively — no Poppler needed)
-  - Image → sent as image/png or image/jpeg
+  - PDF   → sent directly as application/pdf (Gemini reads it natively)
+  - Image → sent as image/png / image/jpeg
 
 Dependencies:
   pip install google-genai pillow
@@ -27,7 +27,7 @@ _GEMINI_MODEL = "gemini-3.6-flash"
 _BASE_PROMPT = """
 You are an expert at reading VTU (Visvesvaraya Technological University) student marksheets.
 
-From the marksheet in this image, extract EVERY subject's:
+From the marksheet in this image/document, extract EVERY subject's:
   - Subject code
   - Total marks obtained (integer, out of 100)
 
@@ -49,10 +49,10 @@ Rules:
 Return ONLY the JSON array.
 """
 
-def build_prompt(valid_codes: list[str]) -> str:
+
+def build_prompt(valid_codes: list) -> str:
     """Build a dynamic extraction prompt listing the exact valid codes."""
     if valid_codes:
-        # Strip trailing x's for display (they represent variant suffixes)
         display = ", ".join(valid_codes)
         section = (
             f"The ONLY valid subject codes for this marksheet are:\n"
@@ -80,18 +80,14 @@ def _image_to_bytes(image: Image.Image) -> bytes:
     return buf.getvalue()
 
 
-def _parse_response(text: str) -> list[dict]:
-    """
-    Parse the raw Gemini text into a list of {code, marks} dicts.
-    Handles responses that accidentally include markdown code fences.
-    """
+def _parse_response(text: str) -> list:
+    """Parse Gemini response into list of {code, marks} dicts."""
     cleaned = re.sub(r"```(?:json)?", "", text).strip()
     match = re.search(r"\[.*\]", cleaned, re.DOTALL)
     if not match:
         raise ValueError(f"No JSON array found in Gemini response:\n{text[:500]}")
 
     raw_list = json.loads(match.group())
-
     results = []
     for item in raw_list:
         code  = str(item.get("code", "")).strip().upper()
@@ -103,19 +99,18 @@ def _parse_response(text: str) -> list[dict]:
                 marks = None
         if code:
             results.append({"code": code, "marks": marks})
-
     return results
 
 
-def extract_from_file(file_bytes: bytes, filename: str, valid_codes: list = None) -> list[dict]:
+def extract_from_file(file_bytes: bytes, filename: str, valid_codes: list = None) -> list:
     """
     Main entry point.
 
     Parameters
     ----------
     file_bytes   : bytes      – raw file content
-    filename     : str        – original filename (used to detect PDF vs image)
-    valid_codes  : list[str]  – known subject codes for this semester (for prompt)
+    filename     : str        – original filename
+    valid_codes  : list[str]  – known subject codes for this semester
 
     Returns
     -------
@@ -127,7 +122,7 @@ def extract_from_file(file_bytes: bytes, filename: str, valid_codes: list = None
     ext = Path(filename).suffix.lower()
 
     if ext == ".pdf":
-        # Send PDF directly — Gemini supports PDF natively, no Poppler needed
+        # Send PDF directly — Gemini reads PDFs natively, no Poppler needed
         img_bytes = file_bytes
         mime      = "application/pdf"
     elif ext in (".jpg", ".jpeg"):
@@ -152,6 +147,4 @@ def extract_from_file(file_bytes: bytes, filename: str, valid_codes: list = None
         config=types.GenerateContentConfig(temperature=0),
     )
 
-    raw_text  = response.text
-    extracted = _parse_response(raw_text)
-    return extracted
+    return _parse_response(response.text)

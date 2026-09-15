@@ -5,7 +5,7 @@ cls
 
 echo.
 echo  ============================================================
-echo   Smart SGPA Calculator  ^|  VTU 2022 Scheme  ^|  4th Semester
+echo   Smart SGPA Calculator  ^|  VTU 2022 Scheme  ^|  All Semesters
 echo  ============================================================
 echo.
 

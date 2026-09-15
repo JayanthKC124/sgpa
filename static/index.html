@@ -519,12 +519,11 @@ footer strong { color: #fff; }
       <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3.33 2 8.67 2 12 0v-5"/>
       </svg>
-      <span>Smart SGPA Calculator<span class="tagline">VTU 2022 · 4th Sem · CS/IS/AIML</span></span>
+      <span>Smart SGPA Calculator<span class="tagline">VTU 2022 Scheme · All Semesters</span></span>
     </a>
     <div class="nav-links">
       <button class="nav-link active" data-page="home">Home</button>
       <button class="nav-link" data-page="upload">Upload Marksheet</button>
-      <button class="nav-link" data-page="about">How It Works</button>
       <button class="nav-link" data-page="about">About</button>
     </div>
     <button class="nav-cta" data-page="upload">Calculate My SGPA</button>
@@ -544,7 +543,7 @@ footer strong { color: #fff; }
     <div class="container">
       <div class="hero-badge">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
-        Version 1 · Live
+        Version 1.0 · Live
       </div>
       <h1>Calculate Your SGPA<br><span class="accent">Automatically</span> From Your Marksheet</h1>
       <p>Upload your marksheet and let the system extract your subjects, marks, grades and credits automatically. No manual entry needed.</p>
@@ -559,11 +558,11 @@ footer strong { color: #fff; }
         </button>
       </div>
       <div class="version-banner">
-        <div class="v-item"><strong>Version 1</strong>Current Release</div>
+        <div class="v-item"><strong>Version 1.0</strong>Current Release</div>
         <div class="sep"></div>
         <div class="v-item"><strong>2022 Scheme</strong>VTU</div>
         <div class="sep"></div>
-        <div class="v-item"><strong>4th Semester</strong>Only</div>
+        <div class="v-item"><strong>All 8 Semesters</strong>Sem 1–8</div>
         <div class="sep"></div>
         <div class="v-item"><strong>CS / IS / AIML</strong>Branches</div>
       </div>
@@ -646,7 +645,7 @@ footer strong { color: #fff; }
   <section class="section" style="text-align:center; padding: 64px 20px;">
     <div class="container">
       <h2 style="font-size:1.9rem;font-weight:800;color:var(--blue-900);margin-bottom:14px;">Ready to calculate your SGPA?</h2>
-      <p style="color:var(--text-sm);margin-bottom:30px;font-size:.95rem;">Upload your VTU 2022 Scheme 4th Semester marksheet and get your result in seconds.</p>
+      <p style="color:var(--text-sm);margin-bottom:30px;font-size:.95rem;">Upload your VTU 2022 Scheme marksheet (any semester) and get your result in seconds.</p>
       <button class="btn-primary" data-page="upload" style="font-size:1.05rem;padding:15px 36px;">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
         Calculate My SGPA
@@ -869,15 +868,15 @@ footer strong { color: #fff; }
   <div class="about-page">
     <div class="container">
       <div class="about-card">
-        <span class="version-badge">⚡ Version 1</span>
+        <span class="version-badge">⚡ Version 1.0</span>
         <h2>Smart SGPA Calculator</h2>
-        <p class="subtitle">VTU 2022 Scheme · 4th Semester · CS / IS / AIML</p>
+        <p class="subtitle">VTU 2022 Scheme · All 8 Semesters · CS / IS / AIML</p>
 
         <h3>What is this?</h3>
-        <p>An automatic SGPA calculator for VTU students. Instead of entering every subject and credit manually, you simply upload your marksheet. The system reads it, matches the subjects, and calculates your SGPA using the official VTU grading system.</p>
+        <p>An automatic SGPA calculator for VTU students. Instead of entering every subject and credit manually, you simply upload your marksheet. The system reads it, matches the subjects against the predefined 2022 scheme curriculum, and calculates your SGPA using the official VTU grading system.</p>
 
         <h3>How extraction works</h3>
-        <p>When you upload a marksheet (PDF or image), it is sent to Google Gemini Vision, which reads the file and extracts subject codes and marks. The extracted data is then matched against the predefined 2022 scheme curriculum to get the correct credits.</p>
+        <p>When you upload a marksheet (PDF or image), it is sent to Google Gemini Vision, which reads the file and extracts subject codes and marks. The extracted codes are then matched against the predefined 2022 scheme curriculum for your selected semester to get the correct credits automatically.</p>
 
         <h3>Grading System (VTU 2022 Absolute)</h3>
         <table class="grade-table">
@@ -898,28 +897,28 @@ footer strong { color: #fff; }
         <p><strong>SGPA</strong> = Total Credit Points ÷ Total Credits</p>
         <p>Subjects with 0 credits (NSS/PE/Yoga) are excluded from the denominator. Failed subjects contribute 0 credit points but their credits still count.</p>
 
-        <h3>4th Semester Curriculum (2022 Scheme)</h3>
+        <h3>Supported Semesters (2022 Scheme)</h3>
         <table class="grade-table">
-          <thead><tr><th>Code</th><th>Subject</th><th>Credits</th></tr></thead>
+          <thead><tr><th>Semester</th><th>Total Credits</th><th>Branch</th></tr></thead>
           <tbody>
-            <tr><td><code>BCS401</code></td><td>Analysis &amp; Design of Algorithms</td><td>3</td></tr>
-            <tr><td><code>BCS402</code></td><td>Microcontrollers</td><td>4</td></tr>
-            <tr><td><code>BCS403</code></td><td>Database Management Systems</td><td>4</td></tr>
-            <tr><td><code>BCSL404</code></td><td>ADA Lab</td><td>1</td></tr>
-            <tr><td><code>BCS405x</code></td><td>ESC / ETC / PLC (elective)</td><td>3</td></tr>
-            <tr><td><code>BCS456x</code></td><td>Ability Enhancement / SEC-IV (elective)</td><td>1</td></tr>
-            <tr><td><code>BBOK407</code></td><td>Biology for Engineers</td><td>2</td></tr>
-            <tr><td><code>BUHK408</code></td><td>Universal Human Values Course</td><td>1</td></tr>
-            <tr><td><code>BNSK/BPEK/BYOK459</code></td><td>NSS / PE / Yoga</td><td>0</td></tr>
+            <tr><td>Physics Cycle (1st Sem)</td><td>20</td><td>CSE / ISC / BT</td></tr>
+            <tr><td>Chemistry Cycle (2nd Sem)</td><td>20</td><td>CSE / ISC / BT</td></tr>
+            <tr><td>3rd Semester</td><td>21</td><td>CS / IS / AIML</td></tr>
+            <tr><td>4th Semester</td><td>19</td><td>CS / IS / AIML</td></tr>
+            <tr><td>5th Semester</td><td>21</td><td>CS / IS / AIML</td></tr>
+            <tr><td>6th Semester</td><td>19</td><td>CS / IS / AIML</td></tr>
+            <tr><td>7th Semester</td><td>20</td><td>CS / IS / AIML</td></tr>
+            <tr><td>8th Semester</td><td>16</td><td>CS / IS / AIML</td></tr>
           </tbody>
         </table>
 
-        <h3>Version 1 Scope</h3>
+        <h3>Version 1.0 Scope</h3>
         <ul>
           <li>Scheme: 2022</li>
-          <li>Semester: 4th only</li>
-          <li>Branches: CS / IS / AIML</li>
-          <li>The architecture is designed to support more semesters and branches in future versions.</li>
+          <li>Semesters: All 8 (Physics Cycle → 8th Sem)</li>
+          <li>Branches: CS / IS / AIML (Civil, EEE, Mechanical — coming soon)</li>
+          <li>Upload formats: PDF, JPG, PNG (max 10 MB)</li>
+          <li>Credits are always from the predefined curriculum — no manual entry.</li>
         </ul>
 
         <div class="divider"></div>
@@ -961,7 +960,7 @@ footer strong { color: #fff; }
 
 <!-- FOOTER -->
 <footer>
-  <strong>Smart SGPA Calculator</strong> · VTU 2022 Scheme · 4th Semester · CS / IS / AIML<br>
+  <strong>Smart SGPA Calculator</strong> · VTU 2022 Scheme · All Semesters · CS / IS / AIML<br>
   <span style="font-size:.75rem;opacity:.6;">Credits always come from the predefined curriculum · No manual entry</span>
 </footer>
 
@@ -969,6 +968,11 @@ footer strong { color: #fff; }
 <!-- ══════════════════════════════════════════════════════════════════════
      APPLICATION SCRIPT  (ES Modules)
 ══════════════════════════════════════════════════════════════════════ -->
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+  window.pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+</script>
 <script type="module">
 import { processMarksheet }  from "/src/services/marksheetProcessor.js";
 
@@ -1127,7 +1131,7 @@ function renderResults(result) {
   document.getElementById("r-filename").textContent = filename || "marksheet";
   document.getElementById("r-scheme").textContent   = `${scheme} Scheme`;
   document.getElementById("r-semester").textContent  = semester;
-  document.getElementById("r-branch").textContent    = `Branch: CS / IS / AIML`;
+  document.getElementById("r-branch").textContent    = branch || `CS / IS / AIML`;
   document.getElementById("r-title").textContent     = failedCount > 0
     ? `SGPA Result — ${failedCount} Subject(s) Failed`
     : "SGPA Result";
@@ -1209,7 +1213,7 @@ function renderResults(result) {
       <div class="unmatched-item">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="color:var(--warn);flex-shrink:0"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
         <code>${esc(u.rawCode)}</code>
-        <span class="text-muted">— not found in 2022 Scheme 4th Semester curriculum. Marks: ${u.marks !== null ? u.marks : "—"}</span>
+        <span class="text-muted">— not found in the selected semester curriculum. Marks: ${u.marks !== null ? u.marks : "—"}</span>
       </div>`).join("");
   } else {
     unmatchedCard.classList.add("hidden");
