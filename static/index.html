@@ -617,10 +617,10 @@ footer strong { color: #fff; }
           </div>
         </div>
         <div class="feature-item">
-          <div class="feature-icon">🤖</div>
+          <div class="feature-icon">🔍</div>
           <div>
-            <h4>AI-Powered OCR</h4>
-            <p>Gemini Vision reads both clear PDFs and photographed marksheets.</p>
+            <h4>Local OCR — No API Key</h4>
+            <p>Tesseract.js reads your marksheet entirely in the browser. Nothing is sent to any server.</p>
           </div>
         </div>
         <div class="feature-item">
@@ -741,15 +741,15 @@ footer strong { color: #fff; }
         <div class="upload-info">
           <span class="info-pill">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            Max 10 MB
+            Max 15 MB
           </span>
           <span class="info-pill">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-            No manual credit entry
+            No API key needed
           </span>
           <span class="info-pill">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            Secure upload
+            Runs locally
           </span>
         </div>
 
@@ -876,7 +876,7 @@ footer strong { color: #fff; }
         <p>An automatic SGPA calculator for VTU students. Instead of entering every subject and credit manually, you simply upload your marksheet. The system reads it, matches the subjects against the predefined 2022 scheme curriculum, and calculates your SGPA using the official VTU grading system.</p>
 
         <h3>How extraction works</h3>
-        <p>When you upload a marksheet (PDF or image), it is sent to Google Gemini Vision, which reads the file and extracts subject codes and marks. The extracted codes are then matched against the predefined 2022 scheme curriculum for your selected semester to get the correct credits automatically.</p>
+        <p>When you upload a marksheet (PDF or image), it is read entirely inside your browser using Tesseract.js (open-source OCR). The file is never uploaded to any server or cloud. The extracted text is matched against the predefined 2022 scheme curriculum for your selected semester to find the correct credits automatically.</p>
 
         <h3>Grading System (VTU 2022 Absolute)</h3>
         <table class="grade-table">
@@ -936,15 +936,15 @@ footer strong { color: #fff; }
   <div class="progress-card">
     <div class="progress-spinner"></div>
     <h3>Analyzing Marksheet</h3>
-    <p id="progress-msg">Reading with AI…</p>
+    <p id="progress-msg">Starting OCR…</p>
     <div class="progress-steps">
       <div class="progress-step" id="ps-1">
         <div class="ps-dot active" id="ps-dot-1"></div>
-        <span>Uploading marksheet</span>
+        <span>Loading OCR engine</span>
       </div>
       <div class="progress-step" id="ps-2">
         <div class="ps-dot" id="ps-dot-2"></div>
-        <span>Reading with AI (Gemini Vision)</span>
+        <span>Reading text from marksheet</span>
       </div>
       <div class="progress-step" id="ps-3">
         <div class="ps-dot" id="ps-dot-3"></div>
